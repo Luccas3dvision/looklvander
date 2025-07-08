@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Status dos Pontos</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .livre { color: green; }
+    .ocupado { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Status dos Pontos</h1>
+  <ul>
+    <% Object.entries(estados).forEach(([ponto, status]) => { %>
+      <li>
+        <strong><%= ponto %></strong>: 
+        <span class="<%= status %>"><%= status %></span>
+        <form method="POST" action="/<%= ponto %>?_method=PUT" style="display:inline;">
+          <button type="submit">Alternar</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>

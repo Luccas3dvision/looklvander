@@ -2,18 +2,17 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Status dos Pontos</title>
+  <title>Status em tempo real</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; }
     .livre { color: green; }
     .ocupado { color: red; }
   </style>
 </head>
 <body>
-  <h1>Status dos Pontos</h1>
-  <ul>
+  <h1>Status dos Pontos (ao vivo)</h1>
+  <ul id="status-list">
     <% Object.entries(estados).forEach(([ponto, status]) => { %>
-      <li>
+      <li id="<%= ponto %>">
         <strong><%= ponto %></strong>: 
         <span class="<%= status %>"><%= status %></span>
         <form method="POST" action="/<%= ponto %>?_method=PUT" style="display:inline;">
@@ -22,5 +21,18 @@
       </li>
     <% }) %>
   </ul>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    socket.on('statusAtualizado', ({ ponto, status }) => {
+      const el = document.getElementById(ponto);
+      if (el) {
+        el.querySelector('span').textContent = status;
+        el.querySelector('span').className = status;
+      }
+    });
+  </script>
 </body>
 </html>

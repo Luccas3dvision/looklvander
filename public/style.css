@@ -1,0 +1,47 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas iguais */
+  gap: 20px;
+  max-width: 900px;
+  margin: 40px auto; /* centralizar */
+  padding: 0 10px;
+}
+
+.coluna {
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  min-width: 200px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 16px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.livre {
+  color: green;
+  font-weight: bold;
+}
+
+.ocupado {
+  color: red;
+  font-weight: bold;
+}
+.status {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}

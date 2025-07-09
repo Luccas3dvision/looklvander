@@ -2,26 +2,37 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Status em tempo real</title>
-  <style>
-    .livre { color: green; }
-    .ocupado { color: red; }
-  </style>
+  <title>Maquinas</title>
+ <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <h1>Status dos Pontos (ao vivo)</h1>
-  <ul id="status-list">
+
+  <!-- Renderiza a lista de status -->
+  <div class="grid-container">
     <% Object.entries(estados).forEach(([ponto, status]) => { %>
-      <li id="<%= ponto %>">
+      <div class="coluna" id="<%= ponto %>">
         <strong><%= ponto %></strong>: 
         <span class="<%= status %>"><%= status %></span>
-        <form method="POST" action="/<%= ponto %>?_method=PUT" style="display:inline;">
+        
+        <form method="POST" action="/<%= ponto %>?_method=PUT">
+          <input type="hidden" name="usuario" value="<%= nome || 'Anônimo' %>">
           <button type="submit">Alternar</button>
         </form>
-      </li>
-    <% }) %>
-  </ul>
 
+        <h4>Histórico:</h4>
+        <ul>
+          <% (historico || []).filter(h => h.ponto === ponto).slice(-5).reverse().forEach(item => { %>
+            <li>
+              <%= item.data.split('T')[1].slice(0,5) %> - <%= item.status %> por <%= item.usuario %>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+    <% }) %>
+  </div>
+
+
+  
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
@@ -34,5 +45,4 @@
       }
     });
   </script>
-</body>
 </html>

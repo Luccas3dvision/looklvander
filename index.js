@@ -34,6 +34,13 @@ const estados = {
   MaquinaC: 'livre'
 };
 
+const ocupantes = {
+  MaquinaA: null,
+  MaquinaB: null,
+  MaquinaC: null
+};
+
+
 const historico = [];  // guarda objetos { ponto, status, data }
 const usuarios = [];  // Endpoint para registrar um usuário
 
@@ -58,11 +65,31 @@ app.get('/', (req, res) => {
 });
 
 // função para alternar o status de um ponto
-function toggle(ponto) {
+function toggle(ponto, usuario) {
   if (!estados.hasOwnProperty(ponto)) return null;
-  estados[ponto] = estados[ponto] === 'livre' ? 'ocupado' : 'livre';
-  return estados[ponto];
+
+  const statusAtual = estados[ponto];
+  const ocupanteAtual = ocupantes[ponto];
+
+  if (statusAtual === 'livre') {
+    // Alguém quer ocupar: setamos o ocupante
+    estados[ponto] = 'ocupado';
+    ocupantes[ponto] = usuario;
+    return estados[ponto];
+  } else if (statusAtual === 'ocupado') {
+    // Alguém quer liberar, só pode se for o mesmo usuário
+    if (usuario === ocupanteAtual) {
+      estados[ponto] = 'livre';
+      ocupantes[ponto] = null;
+      return estados[ponto];
+    } else {
+      return 'bloqueado';
+    }
+  }
+
+  return null;
 }
+
 
 
 // acesso ao ussuarios
@@ -85,9 +112,16 @@ app.post('/user', (req, res) => {
 
 app.put('/:ponto', (req, res) => {
   const ponto = req.params.ponto;
-  const usuario = req.body.usuario || 'Anônimo';
+  const usuario = req.session.nome || 'Anônimo';
 
-  const novoStatus = toggle(ponto);
+  const novoStatus = toggle(ponto, usuario);
+
+  if (novoStatus === 'bloqueado') {
+    return res.render('bloqueado', {
+      mensagem: 'Você não pode liberar uma máquina ocupada por outro usuário!',
+      redirecionar: '/'
+    });
+  }
 
   if (novoStatus) {
     historico.push({
@@ -102,6 +136,8 @@ app.put('/:ponto', (req, res) => {
 
   res.redirect('/');
 });
+
+
 
 server.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

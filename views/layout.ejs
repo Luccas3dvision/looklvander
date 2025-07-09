@@ -21,7 +21,7 @@
 
         <h4>Histórico:</h4>
         <ul>
-          <% (historico || []).filter(h => h.ponto === ponto).slice(-5).reverse().forEach(item => { %>
+          <% (historico || []).filter(h => h.ponto === ponto).slice(-15).reverse().forEach(item => { %>
             <li>
               <%= item.data.split('T')[1].slice(0,5) %> - <%= item.status %> por <%= item.usuario %>
             </li>
@@ -32,7 +32,7 @@
   </div>
 
 
-  
+
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();

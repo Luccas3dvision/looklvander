@@ -2,13 +2,71 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulário de Usuário</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #2a7ae2;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #2a7ae2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #1a5fc8;
+    }
+  </style>
 </head>
 <body>
-  <h1>Digite seu nome</h1>
-  <form method="POST" action="/user">
-    <input type="text" name="nome" placeholder="Seu nome" required>
-    <button type="submit">Enviar</button>
-  </form>
+  <div class="card">
+    <h1>Digite seu nome</h1>
+    <form method="POST" action="/user">
+      <input type="text" name="nome" placeholder="Seu nome" required>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
 </body>
 </html>

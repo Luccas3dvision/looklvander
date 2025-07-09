@@ -1,10 +1,13 @@
+
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 colunas iguais */
   gap: 20px;
-  max-width: 900px;
+  max-width: 33%;
   margin: 40px auto; /* centralizar */
   padding: 0 10px;
+  width: 100%;
 }
 
 .coluna {
@@ -15,6 +18,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   min-width: 200px;
+  height: auto;
 }
 
 button {
@@ -45,3 +49,5 @@ button:hover {
   font-size: 1.2em;
   margin-bottom: 10px;
 }
+
+
